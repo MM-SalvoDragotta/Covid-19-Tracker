@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
   
-<article>
-    <p id="Italy">Italy</p>
-    </p>
-</article>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <title>COVID-19 Tracker</title>
+    </head>
 
-<script src="./assets/js/script.js"></script>
-</body>
+    <body>
+
+        <header>
+            <h1 class="text-primary">Covid-19 Tracker</h1>
+        </header>
+
+        <div class="columns is-desktop">
+            <div class="column is-9 is-12-mobile">
+              <form id="search-form" class="field">
+                <input id="search-input" class="input is-normal" type="text" placeholder="Australia">
+                <select id="format-input" class="select is-multiple is-primary">
+                  <option value="" disabled selected>Select a format...</option>
+                </select>
+                <button class="button is-info is-rounded">Search</button>
+              </form>
+
+            </div>
+        
+            <div class="column is-9 is-12-mobile">
+              <h2>Results: <span id="results-text"></span></h2>
+              <div id="results-graph"></div>
+            </div>
+            
+        </div>
+
+        <article>
+            <p id="Italy">Italy</p>
+            </p>
+        </article>
+
+        <script src="./assets/js/script.js"></script>
+
+    </body>
+
 </html>
