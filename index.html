@@ -13,32 +13,43 @@
     <body>
 
         <header>
-            <h1 class="text-primary">Covid-19 Tracker</h1>
+            <h1 class="title is-1">Covid-19 Tracker</h1>
+
         </header>
 
         <div class="columns is-desktop">
-            <div class="column is-9 is-12-mobile">
-              <form id="search-form" class="field">
-                <input id="search-input" class="input is-normal" type="text" placeholder="Australia">
-                <select id="format-input" class="select is-multiple is-primary">
-                  <option value="" disabled selected>Select a format...</option>
-                </select>
-                <button class="button is-info is-rounded">Search</button>
-              </form>
+          <div class="column is-3 is-12-mobile is-vcentered">
 
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="Australia">
+              </div>
             </div>
+            <div class="field">
+              <div class="control">
+                <div class="select">
+                  <select>
+                    <option>Select dropdown</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-link">Submit</button>
+              </div>
+            </div>
+
+          </div>
         
-            <div class="column is-9 is-12-mobile">
-              <h2>Results: <span id="results-text"></span></h2>
-              <div id="results-graph"></div>
-            </div>
+          <div class="column is-9 is-12-mobile">
+            <h2>Results: <span id="results-text"></span></h2>
+            <div id="results-graph"></div>
+          </div>
             
         </div>
-
-        <article>
-            <p id="Italy">Italy</p>
-            </p>
-        </article>
 
         <script src="./assets/js/script.js"></script>
 
