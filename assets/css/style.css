@@ -1,3 +1,27 @@
 .title {
     text-align: center;
+    background-image: linear-gradient(to right, rgb(165, 173, 207) , rgb(76, 168, 130));
+    border: 1px solid black
+}
+
+h2 {
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.column {
+    margin: 2rem;
+    background-color: rgba(128, 167, 126, 0.397);
+    border-radius: 15px;
+    border: 1px solid black;
+    box-shadow: 5px 2.5px rgba(119, 136, 153, 0.397);
+}
+
+.custom-column {
+    margin-left: 2rem;
+    text-align: center;
+    background-color: rgba(129, 176, 185, 0.397);
+    border-radius: 15px;
+    border: 1px solid black;
+    box-shadow: 5px 2.5px rgba(119, 136, 153, 0.397);
 }
