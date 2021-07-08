@@ -1,7 +1,8 @@
 .title {
     text-align: center;
     background-image: linear-gradient(to right, rgb(165, 173, 207) , rgb(76, 168, 130));
-    border: 1px solid black
+    border: 1px solid black;
+    text-shadow: 3px 3px rgba(83, 121, 160, 0.993);
 }
 
 h2 {
