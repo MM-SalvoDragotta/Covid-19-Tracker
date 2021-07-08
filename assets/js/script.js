@@ -23,4 +23,21 @@ fetch(endpointUrl, options)
 	  .catch((err) => {
 		console.log(err);
 	  });
-	
+
+//helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
+let myChart1 = document.getElementById('myChart').getContext('2d');
+
+	  let Population = new Chart(myChart, {
+		type: 'line', //bar, horizontalBar, pie, line, donut, radar, polarArea
+		data: {
+		 labels: ['lane cove', 'longuevile', 'crows-nest', 'greenwich'],
+		 datasets: [{
+		   label: 'Population',
+		   data: 
+		   [1934920, 
+			2392395, 
+			12849, 
+			2911204]
+		 }]
+		}
+	  })
