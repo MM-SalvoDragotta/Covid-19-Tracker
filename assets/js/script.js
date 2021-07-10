@@ -120,3 +120,29 @@ $("#submit").click(function(event){
 	
 });
 
+function getCountries() {
+
+	fetch("https://covid-19-data.p.rapidapi.com/help/countries", {
+		method: "GET",
+		headers: {
+			"x-rapidapi-host": rapidApiHost,
+			"x-rapidapi-key": rapidApiKey,
+		}
+	})
+	.then(response => {
+		return response.json();
+	})
+	.then((body) => {
+		console.log(body);
+		console.log(body[0].name)
+		for (var i = 0 ; i < body.length ; i++ ) {
+			$("#browsers").append("<option value='" + body[i].name + "'>");
+		};
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+
+};
+
+getCountries();
