@@ -14,7 +14,7 @@ var countryName = document.getElementById('results-text');
 // var country2 = $('#search-input');
 // console.log(country2.value);
 
-const labels = ['Confirmed', 'Deaths', 'Recovered'];
+const labels = ['Confirmed', 'Recovered', 'Deaths' ];
 
 
 var covidDataChart = "";
@@ -40,7 +40,7 @@ function dataByCountry (country){
 	// console.log(body);
 	// console.log(body[0].confirmed)
 	// myChart.destroy();
-	renderChart(body[0].confirmed, body[0].deaths, body[0].recovered);
+	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
 	console.log(body[0].confirmed);
 	console.log(body[0].deaths);
 	console.log(body[0].recovered);
@@ -53,15 +53,15 @@ function dataByCountry (country){
 
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
-function renderChart (confirmed, deaths, recovered ){	
+function renderChart (confirmed, recovered, deaths){	
 	// countryData = [30903, 910, 29466]
 	var barChartData ={
 		type: 'bar', //bar, horizontalBar, pie, line, donut, radar, polarArea , doughnut
 			data: {
 			labels: labels,
 			datasets: [{
-			data: [confirmed, deaths, recovered],
-			backgroundColor: ["blue" , "red", "green"],
+			data: [confirmed, recovered, deaths ],
+			backgroundColor: ["blue" , "green", "red"],
 			borderColor: ["black" , "black" , "black" ],
 			borderWidth: 1.5,
 			hoverOffset: 4
@@ -75,7 +75,7 @@ function renderChart (confirmed, deaths, recovered ){
 					},
 					subtitle: {
 						display: true,
-						text: 'Confirmed Deaths Recovered'
+						text: 'Confirmed Recovered Deaths '
 					},
 					// customPlugin : {
 					// 	id: 'custom_canvas_background_color',
@@ -109,14 +109,12 @@ function renderChart (confirmed, deaths, recovered ){
 
 $("#submit").click(function(event){
 	// console.log(event.target)
-	console.log($(this).parentsUntil(".input").find("#search-input").val());
-	var country = $(this).parentsUntil(".input").find("#search-input").val();
-	// $(this).parentsUntil(".bill").find("#BillNo").val();	
+	// console.log($(this).parentsUntil(".input").find("#search-input").val());
+	var country = $(this).parentsUntil(".input").find("#search-input").val();	
 	if (covidDataChart){
 		covidDataChart.destroy();	
 	}	
 	dataByCountry(country);
-
 	
 });
 
