@@ -16,7 +16,6 @@ var countryName = document.getElementById('results-text');
 
 const labels = ['Confirmed', 'Recovered', 'Deaths' ];
 
-
 var covidDataChart = "";
 
 //https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
@@ -99,42 +98,39 @@ function renderChart (confirmed, recovered, deaths){
 
 	};	
 	var myChart = document.getElementById('myChart').getContext('2d');
-	covidDataChart = new Chart(myChart, barChartData);
-	
-	console.log(covidDataChart);
-
+	covidDataChart = new Chart(myChart, barChartData);	
+	// console.log(covidDataChart);
 }
   
-// add event handler on submit button
-
 $("#submit").click(function(event){
 	// console.log(event.target)
 	// console.log($(this).parentsUntil(".input").find("#search-input").val());
-	var country = $(this).parentsUntil(".input").find("#search-input").val();	
-	if (covidDataChart){
-		covidDataChart.destroy();	
-	}	
-	dataByCountry(country);
-	
-});
+	// var country = $(this).parentsUntil(".input").find("#search-input").val();
+	// var country = $(this).$('#browser option:selected').text();
+	var country = $("input[name=browser]").val();
+				
+		console.log(country);
+		if (covidDataChart){
+			covidDataChart.destroy();	
+		}	
+		dataByCountry(country);
+	});
 
 function getCountries() {
+	const endpointUrl = "https://covid-19-data.p.rapidapi.com/help/countries";
 
-	fetch("https://covid-19-data.p.rapidapi.com/help/countries", {
-		method: "GET",
-		headers: {
-			"x-rapidapi-host": rapidApiHost,
-			"x-rapidapi-key": rapidApiKey,
-		}
-	})
+	fetch(endpointUrl, options)
 	.then(response => {
 		return response.json();
 	})
 	.then((body) => {
-		console.log(body);
-		console.log(body[0].name)
+		// console.log(body);
+		// console.log(body[0].name)
 		for (var i = 0 ; i < body.length ; i++ ) {
-			$("#browsers").append("<option value='" + body[i].name + "'>");
+			$("#browsers").append(`<option value="${body[i].name}">`);
+
+			// `<option id=${body[i].name} value=${body[i].name}>`
+
 		};
 	})
 	.catch((err) => {
@@ -142,5 +138,6 @@ function getCountries() {
 	});
 
 };
+
 
 getCountries();
