@@ -139,8 +139,9 @@ function getCountries() {
 };
 
 function save() {
-	var country = ("#browser").value;
-  	var new_data = document.getElementById.country;{
+	var country = $("input[name=browser]").val();
+  	var new_data = document.getElementById.country;
+ 	 if (localStorage.getItem(country) == null) {
     localStorage.setItem(country, JSON.stringify([]));
   }
   var old_data = JSON.parse(localStorage.getItem(country));
@@ -148,6 +149,10 @@ function save() {
 
   localStorage.setItem(country, JSON.stringify(old_data));
 }
+
+function getSearches() {
+	return JSON.parse(localStorage.getItem.country) || [];
+  } 
 
 getCountries();
 
