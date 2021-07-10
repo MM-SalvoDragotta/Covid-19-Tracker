@@ -10,11 +10,14 @@ const options = {
 
 var countryName = document.getElementById('results-text');
 
-var country = "USA";
-const labels = ['Confirmed', 'Deaths', 'Recovered'];
-countryName.textContent = toTitleCas(country);
+// var country = "USA";
+// var country2 = $('#search-input');
+// console.log(country2.value);
 
-const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
+const labels = ['Confirmed', 'Deaths', 'Recovered'];
+
+
+var covidDataChart = "";
 
 //https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
 function toTitleCas (phrase) {
@@ -25,19 +28,29 @@ function toTitleCas (phrase) {
 	  .join(' ');
   };
 
-//Fetch country data and display it
-fetch(endpointUrl, options)
+function dataByCountry (country){
+	const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
+	countryName.textContent = toTitleCas(country);
+	//Fetch country data and display it
+	fetch(endpointUrl, options)
 	.then(response => {
 		return response.json();
-	  })
-	  .then((body) => {
+	})
+	.then((body) => {
 	// console.log(body);
 	// console.log(body[0].confirmed)
-	renderChart(body[0].confirmed, body[0].deaths, body[0].recovered)	
-	  })
-	  .catch((err) => {
-		console.log(err);
-	  });
+	// myChart.destroy();
+	renderChart(body[0].confirmed, body[0].deaths, body[0].recovered);
+	console.log(body[0].confirmed);
+	console.log(body[0].deaths);
+	console.log(body[0].recovered);
+		
+	})
+	.catch((err) => {
+	console.log(err);
+  });
+}
+
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
 function renderChart (confirmed, deaths, recovered ){	
@@ -86,10 +99,24 @@ function renderChart (confirmed, deaths, recovered ){
 
 	};	
 	var myChart = document.getElementById('myChart').getContext('2d');
-	let covidDataChart = new Chart(myChart, barChartData);
+	covidDataChart = new Chart(myChart, barChartData);
+	
+	console.log(covidDataChart);
 
 }
-
-
   
 // add event handler on submit button
+
+$("#submit").click(function(event){
+	// console.log(event.target)
+	console.log($(this).parentsUntil(".input").find("#search-input").val());
+	var country = $(this).parentsUntil(".input").find("#search-input").val();
+	// $(this).parentsUntil(".bill").find("#BillNo").val();	
+	if (covidDataChart){
+		covidDataChart.destroy();	
+	}	
+	dataByCountry(country);
+
+	
+});
+
