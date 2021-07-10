@@ -136,8 +136,19 @@ function getCountries() {
 	.catch((err) => {
 		console.log(err);
 	});
-
 };
 
+function save() {
+	var country = ("#browser").value;
+  	var new_data = document.getElementById.country;{
+    localStorage.setItem(country, JSON.stringify([]));
+  }
+  var old_data = JSON.parse(localStorage.getItem(country));
+  old_data.push(new_data);
+
+  localStorage.setItem(country, JSON.stringify(old_data));
+}
 
 getCountries();
+
+
