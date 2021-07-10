@@ -115,7 +115,7 @@ $("#submit").click(function(event){
 		}	
 		dataByCountry(country);
 	});
-
+	
 function getCountries() {
 	const endpointUrl = "https://covid-19-data.p.rapidapi.com/help/countries";
 

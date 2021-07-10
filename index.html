@@ -25,7 +25,12 @@
             <div class="field">
               <div class="control">
                 <label for="search-input" class="label">Enter Country:</label>
-                <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
+                <div class="control has-icons-right">
+                  <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
+                  <span class="icon is-small is-right">
+                    <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
+                  </span>
+                </div>
                 <datalist id="browsers">
                 </datalist>
               </div>
