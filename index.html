@@ -5,79 +5,107 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- The link to bulma styles -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>        
+        <!-- The link to chart js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>
+        <!-- The link to css -->        
         <link rel="stylesheet" href="assets/css/style.css">
+        <!-- The link to jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <title>COVID-19 Tracker</title>
     </head>
 
     <body>
 
-        <header>
-            <h1 class="title is-1">Covid-19 Tracker</h1>
+      <!-- This is the header of the page that displays the title "Covid-19 Tracker" -->
+      <header>
+        <h1 class="title is-1">Covid-19 Tracker</h1>
 
-        </header>
+      </header>
 
-        <div class="columns is-desktop">
-          <div class="column is-3-desktop is-2-tablet is-12-mobile custom-column">
+      <!-- This sets the columns -->
+      <div class="columns is-desktop">
+        <!-- This holds the search card -->
+        <div class="column is-3-desktop is-2-tablet is-12-mobile custom-column">
 
-            <div class="field">
-              <div class="control">
-                <label for="search-input" class="label">Enter Country:</label>
-                <div class="control has-icons-right">
-                  <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
-                  <span class="icon is-small is-right">
-                    <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
-                  </span>
-                </div>
-                <datalist id="browsers">
-                </datalist>
+          <!-- This is the country search bar -->
+          <div class="field">
+            <div class="control">
+              <!-- The lable -->
+              <label for="search-input" class="label">Enter Country:</label>
+              <!-- This is the search function -->
+              <div class="control has-icons-right">
+                <!-- Search bar -->
+                <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
+                <!-- Clear button -->
+                <span class="icon is-small is-right">
+                  <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
+                </span>
               </div>
-            </div>
-
-            <div class="field">
-              <label class="label">Date Option:</label>
-              <div class="control">
-                <div class="select is-link">
-                  <select>
-                    <option>Date Range</option>
-                    <option>All Time</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="field">
-              <label class="label">Start Date:</label>
-              <input type="date" id="date-input-start" class="input is-link"/>
-            </div>
-
-            <div class="field">
-              <label class="label">End Date:</label>
-              <input type="date" id="date-input-end" class="input is-link"/>
-            </div>
-
-            <div class="field">
-              <div class="control">
-                <button id="submit" class="button is-link is-focused is-rounded">Submit</button>
-              </div>
-            </div>
-
-          </div>
-        
-          <div class="column is-8-desktop is-6-tablet is-12-mobile">
-            <h2>Results: <span id="results-text"></span></h2>
-            <div class="container">
-              <canvas id="myChart"></canvas>
+              <!-- The auto populated list -->
+              <datalist id="browsers">
+              </datalist>
             </div>
           </div>
-            
+
+          <!-- This is the date options dropdown -->
+          <div class="field">
+            <!-- The lable -->
+            <label class="label">Date Option:</label>
+            <div class="control">
+              <div class="select is-link">
+                <!-- the dropdown options -->
+                <select>
+                  <option>Date Range</option>
+                  <option>All Time</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- This is the from date selector  -->
+          <div class="field">
+            <!-- The label -->
+            <label class="label">From Date:</label>
+            <!-- The date selector -->
+            <input type="date" id="date-input-start" class="input is-link"/>
+          </div>
+
+          <!-- This is the to date selector -->
+          <div class="field">
+            <!-- The lable -->
+            <label class="label">To Date:</label>
+            <!-- The date selector -->
+            <input type="date" id="date-input-end" class="input is-link"/>
+          </div>
+
+          <!-- This is the submit button -->
+          <div class="field">
+            <div class="control">
+              <button id="submit" class="button is-link is-focused is-rounded" onclick="save()">Submit</button>
+            </div>
+          </div>
+
         </div>
         
-        <script src="./assets/js/script.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- This holds the results card -->
+        <div class="column is-8-desktop is-6-tablet is-12-mobile">
+          <!-- The heading for the results card that displays "Results: -insert selected country name-" -->
+          <h2>Results: <span id="results-text"></span></h2>
+          <!-- The id that anchors the chart for dispay -->
+          <div class="container">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+            
+      </div>
+        
+      <!-- The link to the javascript -->
+      <script src="./assets/js/script.js"></script>
+      <!-- The link to jquery -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 
 </html>
