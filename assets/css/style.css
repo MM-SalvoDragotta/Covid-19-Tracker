@@ -13,20 +13,32 @@ h2 {
     font-size: 28px;
 }
 
-/* This styles the results card on the right of the page */
-.column {
-    margin: 2rem;
-    background-color: rgba(128, 167, 126, 0.397);
+/* This styles the search card on the left of the page */
+.custom-column {
+    margin-top: 1.25rem;
+    margin-left: 2rem;
+    text-align: center;
+    background-color: rgba(129, 176, 185, 0.397);
     border-radius: 15px;
     border: 1px solid black;
     box-shadow: 5px 2.5px rgba(119, 136, 153, 0.397);
 }
 
-/* This styles the search card on the left of the page */
-.custom-column {
+/* This styles the previous countries card at the bottom of the page */
+.custom-column2 {
+    margin-top: 1.25rem;
     margin-left: 2rem;
     text-align: center;
-    background-color: rgba(129, 176, 185, 0.397);
+    background-color: rgba(185, 129, 182, 0.397);
+    border-radius: 15px;
+    border: 1px solid black;
+    box-shadow: 5px 2.5px rgba(119, 136, 153, 0.397);
+}
+
+/* This styles the results card on the right of the page */
+.custom-column3 {
+    margin: 2rem;
+    background-color: rgba(128, 167, 126, 0.397);
     border-radius: 15px;
     border: 1px solid black;
     box-shadow: 5px 2.5px rgba(119, 136, 153, 0.397);
