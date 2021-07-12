@@ -24,73 +24,92 @@
 
       </header>
 
-      <!-- This sets the columns -->
+      <!-- This sets and holds the first row of columns -->
       <div class="columns is-desktop">
-        <!-- This holds the search card -->
-        <div class="column is-3-desktop is-2-tablet is-12-mobile custom-column">
-
-          <!-- This is the country search bar -->
-          <div class="field">
-            <div class="control">
-              <!-- The lable -->
-              <label for="search-input" class="label">Enter Country:</label>
-              <!-- This is the search function -->
-              <div class="control has-icons-right">
-                <!-- Search bar -->
-                <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
-                <!-- Clear button -->
-                <span class="icon is-small is-right">
-                  <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
-                </span>
+        
+        <div class="column">
+          <!-- This holds the search card -->
+          <div class="is-3-desktop is-2-tablet is-12-mobile custom-column">
+            <!-- This is the country search bar -->
+            <div class="field">
+              <div class="control">
+                <!-- The label -->
+                <label for="search-input" class="label">Enter Country:</label>
+                <!-- This is the search function -->
+                <div class="control has-icons-right">
+                  <!-- Search bar -->
+                  <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
+                  <!-- Clear button -->
+                  <span class="icon is-small is-right">
+                    <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
+                  </span>
+                </div>
+                <!-- The auto populated list -->
+                <datalist id="browsers">
+                </datalist>
               </div>
-              <!-- The auto populated list -->
-              <datalist id="browsers">
-              </datalist>
+  
+            </div>
+  
+            <!-- This is the date options dropdown -->
+            <div class="field">
+              <!-- The label -->
+              <label class="label">Date Option:</label>
+              <div class="control">
+                <div class="select is-link">
+                  <!-- the dropdown options -->
+                  <select>
+                    <option>Date Range</option>
+                    <option>All Time</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+            <!-- This is the from date selector  -->
+            <div class="field">
+              <!-- The label -->
+              <label class="label">From Date:</label>
+              <!-- The date selector -->
+              <input type="date" id="date-input-start" class="input is-link"/>
+            </div>
+  
+            <!-- This is the to date selector -->
+            <div class="field">
+              <!-- The label -->
+              <label class="label">To Date:</label>
+              <!-- The date selector -->
+              <input type="date" id="date-input-end" class="input is-link"/>
+            </div>
+  
+            <!-- This is the submit button -->
+            <div class="field">
+              <div class="control">
+                <button id="submit" class="button is-link is-focused is-rounded">Submit</button>
+              </div>
             </div>
           </div>
 
-          <!-- This is the date options dropdown -->
-          <div class="field">
-            <!-- The lable -->
-            <label class="label">Date Option:</label>
+          <!-- This holds the previous countries card -->
+          <div class="column custom-column2">
             <div class="control">
-              <div class="select is-link">
-                <!-- the dropdown options -->
-                <select>
-                  <option>Date Range</option>
-                  <option>All Time</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- This is the from date selector  -->
-          <div class="field">
             <!-- The label -->
-            <label class="label">From Date:</label>
-            <!-- The date selector -->
-            <input type="date" id="date-input-start" class="input is-link"/>
-          </div>
+              <label for="search-input" class="label">Previous Countries Searched:</label>
+            <!-- The button -->
+              <div class="field">
+                <div class="control">
+                  <button id="previous-country-submit" class="button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>-insert country name-</button>
+                </div>
+              </div>
 
-          <!-- This is the to date selector -->
-          <div class="field">
-            <!-- The lable -->
-            <label class="label">To Date:</label>
-            <!-- The date selector -->
-            <input type="date" id="date-input-end" class="input is-link"/>
-          </div>
-
-          <!-- This is the submit button -->
-          <div class="field">
-            <div class="control">
-              <button id="submit" class="button is-link is-focused is-rounded" onclick="save()">Submit</button>
             </div>
+
           </div>
 
         </div>
         
         <!-- This holds the results card -->
-        <div class="column is-8-desktop is-6-tablet is-12-mobile">
+        <div class="column is-8-desktop is-6-tablet is-12-mobile custom-column3">
           <!-- The heading for the results card that displays "Results: -insert selected country name-" -->
           <h2>Results: <span id="results-text"></span></h2>
           <!-- The id that anchors the chart for dispay -->
