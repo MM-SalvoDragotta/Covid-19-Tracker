@@ -107,9 +107,8 @@ function renderChart (confirmed, recovered, deaths){
 	// console.log(covidDataChart);
 }
 
-var arrayCountries = [];
 
-
+var PreviousCountries = [];
   
 $("#submit").click(function(event){
 	// console.log(event.target)
@@ -128,30 +127,34 @@ $("#submit").click(function(event){
 		// console.log(arrayCountries)
 
 		//Save to local Storage
-		localStorage.setItem(country, JSON.stringify(country));
+		
+		
+		// localStorage.setItem(country, JSON.stringify(country));
+		if ($.inArray(country, PreviousCountries)==-1){
+			PreviousCountries.push(country);
+			localStorage.setItem("PreviousCountries", JSON.stringify(PreviousCountries));
+		}
+		console.log(PreviousCountries[1])
 
 	});
 
-function renderLocalStorage(){
-	// let nextValue;
-	// console.log(arrayCountries)	
-	// for (let i = 0; i < localStorage.length; i++){
-	// nextValue = localStorage.getItem(localStorage.key(i));
-	
-	// if (arrayCountries.includes(nextValue)){
-	// 	console.log(nextValue)
-	// }
-	//Do something with nextValue..
-	//...
+
+
+var renderLocalStorage = function(arrayCountries){
+
 	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
 	const items = { ...localStorage };
-	console.log(items)
-	console.log(items.Afghanistan) 
-
-
-	// console.log(items.Afghanistan==arrayCountries[0])
-
+	var localStorageString = items.PreviousCountries 
+	var localStorageArray = JSON.parse(localStorageString)
+	for (var i=0; i<localStorageArray.length; i++ ) {
+		$(".previous").
+		append(`
+		<li><button id="${localStorageArray[i]}" class="previou-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>${localStorageArray[i]}</button></li>
+		`)
+	}
 }
+
+const arrayCountries = [];
 
 // Add Countries to dropdown
 function getCountries() {
@@ -168,9 +171,10 @@ function getCountries() {
 		for (var i = 0 ; i < body.length ; i++ ) {
 			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);
 			arrayCountries.push(body[i].name)
-			// `<option id=${body[i].name} value=${body[i].name}>`
-		
+			// `<option id=${body[i].name} value=${body[i].name}>`		
 		};
+		
+		renderLocalStorage(arrayCountries)
 		
 	})
 	.catch((err) => {
@@ -178,6 +182,7 @@ function getCountries() {
 	});
 };
 
+// console.log(arrayCountries[0])
 // console.log (arrayCountries);
 // function save() {
 // 	var country = $("input[name=browser]").val();
@@ -195,15 +200,16 @@ function getCountries() {
 // 	return JSON.parse(localStorage.getItem.country) || [];
 //   } 
 
-getCountries();
+
+function init(){
+	getCountries();
+	
+}
+
+init()
 
 
 
-console.log(arrayCountries)
-console.log(arrayCountries.length)
-console.log(arrayCountries[0])
-
-renderLocalStorage()
 
 
 
