@@ -43,3 +43,7 @@ h2 {
     border: 1px solid black;
     box-shadow: 5px 2.5px rgba(119, 136, 153, 0.397);
 }
+
+li {
+    padding: 0.25rem;
+}
