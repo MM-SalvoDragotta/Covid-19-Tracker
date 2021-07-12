@@ -26,6 +26,7 @@ function toTitleCas (phrase) {
 	  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
 	  .join(' ');
   };
+// var array = []
 
 function dataByCountry (country){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
@@ -39,17 +40,21 @@ function dataByCountry (country){
 	// console.log(body);
 	// console.log(body[0].confirmed)
 	// myChart.destroy();
+	// var array = []
+	// array.push(body[0].confirmed);
+	// array.push(body[0].recovered);
+	// console.log(body[0].confirmed)
+	// console.log(array)
 	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
-	console.log(body[0].confirmed);
-	console.log(body[0].deaths);
-	console.log(body[0].recovered);
+	// console.log(body[0].confirmed);
+	// console.log(body[0].deaths);
+	// console.log(body[0].recovered);
 		
 	})
 	.catch((err) => {
 	console.log(err);
   });
 }
-
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
 function renderChart (confirmed, recovered, deaths){	
@@ -101,6 +106,27 @@ function renderChart (confirmed, recovered, deaths){
 	covidDataChart = new Chart(myChart, barChartData);	
 	// console.log(covidDataChart);
 }
+
+var arrayCountries = [];
+
+const items= {};
+
+function renderLocalStorage(){
+	// let nextValue;
+	// console.log(arrayCountries)	
+	// for (let i = 0; i < localStorage.length; i++){
+    // nextValue = localStorage.getItem(localStorage.key(i));
+	
+	// if (arrayCountries.includes(nextValue)){
+	// 	console.log(nextValue)
+	// }
+    //Do something with nextValue..
+    //...
+	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
+	items = { ...localStorage };
+	console.log(items)
+}
+
   
 $("#submit").click(function(event){
 	// console.log(event.target)
@@ -109,13 +135,21 @@ $("#submit").click(function(event){
 	// var country = $(this).$('#browser option:selected').text();
 	var country = $("input[name=browser]").val();
 				
-		console.log(country);
+		// console.log(country);
 		if (covidDataChart){
 			covidDataChart.destroy();	
 		}	
 		dataByCountry(country);
+		//get List of countries
+		var arrayCountries = $("option[option-country]");
+		// console.log(arrayCountries)
+
+		//Save to local Storage
+		localStorage.setItem(country, JSON.stringify(country));
+
 	});
-	
+
+// Add Countries to dropdown
 function getCountries() {
 	const endpointUrl = "https://covid-19-data.p.rapidapi.com/help/countries";
 
@@ -126,34 +160,38 @@ function getCountries() {
 	.then((body) => {
 		// console.log(body);
 		// console.log(body[0].name)
+		// arrayCountries = body		
 		for (var i = 0 ; i < body.length ; i++ ) {
-			$("#browsers").append(`<option value="${body[i].name}">`);
-
+			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);
+			arrayCountries.push(body[i].name)
 			// `<option id=${body[i].name} value=${body[i].name}>`
-
+		
 		};
+		
 	})
 	.catch((err) => {
 		console.log(err);
 	});
 };
 
-function save() {
-	var country = $("input[name=browser]").val();
-  	var new_data = document.getElementById.country;
- 	 if (localStorage.getItem(country) == null) {
-    localStorage.setItem(country, JSON.stringify([]));
-  }
-  var old_data = JSON.parse(localStorage.getItem(country));
-  old_data.push(new_data);
+// console.log (arrayCountries);
+// function save() {
+// 	var country = $("input[name=browser]").val();
+//   	var new_data = document.getElementById.country;
+//  	 if (localStorage.getItem(country) == country) {
+//     localStorage.setItem(country, JSON.stringify([]));
+//   }
+//   var old_data = JSON.parse(localStorage.getItem(country));
+//   old_data.push(new_data);
 
-  localStorage.setItem(country, JSON.stringify(old_data));
-}
+//   localStorage.setItem(country, JSON.stringify(old_data));
+// }
 
-function getSearches() {
-	return JSON.parse(localStorage.getItem.country) || [];
-  } 
+// function getSearches() {
+// 	return JSON.parse(localStorage.getItem.country) || [];
+//   } 
 
 getCountries();
+renderLocalStorage()
 
 
