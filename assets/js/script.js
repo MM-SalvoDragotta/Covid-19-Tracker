@@ -109,23 +109,6 @@ function renderChart (confirmed, recovered, deaths){
 
 var arrayCountries = [];
 
-const items= {};
-
-function renderLocalStorage(){
-	// let nextValue;
-	// console.log(arrayCountries)	
-	// for (let i = 0; i < localStorage.length; i++){
-    // nextValue = localStorage.getItem(localStorage.key(i));
-	
-	// if (arrayCountries.includes(nextValue)){
-	// 	console.log(nextValue)
-	// }
-    //Do something with nextValue..
-    //...
-	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
-	items = { ...localStorage };
-	console.log(items)
-}
 
   
 $("#submit").click(function(event){
@@ -148,6 +131,27 @@ $("#submit").click(function(event){
 		localStorage.setItem(country, JSON.stringify(country));
 
 	});
+
+function renderLocalStorage(){
+	// let nextValue;
+	// console.log(arrayCountries)	
+	// for (let i = 0; i < localStorage.length; i++){
+	// nextValue = localStorage.getItem(localStorage.key(i));
+	
+	// if (arrayCountries.includes(nextValue)){
+	// 	console.log(nextValue)
+	// }
+	//Do something with nextValue..
+	//...
+	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
+	const items = { ...localStorage };
+	console.log(items)
+	console.log(items.Afghanistan) 
+
+
+	// console.log(items.Afghanistan==arrayCountries[0])
+
+}
 
 // Add Countries to dropdown
 function getCountries() {
@@ -192,6 +196,16 @@ function getCountries() {
 //   } 
 
 getCountries();
+
+
+
+console.log(arrayCountries)
+console.log(arrayCountries.length)
+console.log(arrayCountries[0])
+
 renderLocalStorage()
+
+
+
 
 
