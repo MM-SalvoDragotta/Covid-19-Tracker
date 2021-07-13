@@ -82,7 +82,7 @@ function dataByCountryDate (country, date){
 			console.log(body[0].provinces[0].confirmed)
 			console.log(body[0])
 		} else {
-			msg.html("No data for this date")
+			$(".msg").html ("There is no data for this date");
 		}
 		
 	})
@@ -239,7 +239,7 @@ function init(){
 init()
 
 
-/* 
+
 
 function autocomplete(inp, arr) {
 	
@@ -334,6 +334,6 @@ function autocomplete(inp, arr) {
   }
 
  
-  //autocomplete(document.getElementById("search-input"), endpointUrl);
+  autocomplete(document.getElementById("search-input"), endpointUrl);
 
- */
+
