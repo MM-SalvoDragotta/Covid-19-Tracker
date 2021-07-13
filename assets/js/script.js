@@ -9,6 +9,7 @@ const options = {
   };
 
 var countryName = document.getElementById('results-text');
+var countryDate = document.getElementById('results-date');
 
 // var country = "USA";
 // var country2 = $('#search-input');
@@ -56,6 +57,27 @@ function dataByCountry (country){
   });
 }
 
+function dataByCountryDate (country, date){
+	const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}&date=${date}`;
+	console.log(endpointUrl)
+	countryName.textContent = toTitleCas(country);
+	//Fetch country data and display it
+	fetch(endpointUrl, options)
+	.then(response => {
+		return response.json();
+	})
+	.then((body) => {
+		console.log(body);
+		console.log(body[0].provinces)
+
+		renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
+
+	})
+	.catch((err) => {
+	console.log(err);
+  });
+}
+//dataByCountryDate("italy", "2020-04-01")
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
 function renderChart (confirmed, recovered, deaths){	
 	// countryData = [30903, 910, 29466]
@@ -108,6 +130,8 @@ function renderChart (confirmed, recovered, deaths){
 }
 
 var PreviousCountries = [];
+
+
   
 $("#submit").click(function(event){
 	// console.log(event.target)
@@ -115,12 +139,19 @@ $("#submit").click(function(event){
 	// var country = $(this).parentsUntil(".input").find("#search-input").val();
 	// var country = $(this).$('#browser option:selected').text();
 	var country = $("input[name=browser]").val();
+	var date = $("#date-input-start").val();
 				
 		// console.log(country);
 		if (covidDataChart){
 			covidDataChart.destroy();	
-		}	
-		dataByCountry(country);
+		}
+
+		if (!date)  {
+			dataByCountry(country);
+		} else {
+			dataByCountryDate(country, date)
+		}
+		
 		//get List of countries
 		var arrayCountries = $("option[option-country]");
 		// console.log(arrayCountries)
@@ -129,15 +160,14 @@ $("#submit").click(function(event){
 		
 		
 		// localStorage.setItem(country, JSON.stringify(country));
-		if ($.inArray(country, PreviousCountries)==-1){
-			PreviousCountries.push(country);
+		if ($.inArray(country + " " + date, PreviousCountries)==-1){
+			PreviousCountries.push(country + " " + date);
 			localStorage.setItem("PreviousCountries", JSON.stringify(PreviousCountries));
 		}
 		console.log(PreviousCountries)
 		renderLocalStorage()
 
 	});
-
 
 var renderLocalStorage = function(arrayCountries){
 	
@@ -191,7 +221,7 @@ function init(){
 init()
 
 
-
+/* 
 
 function autocomplete(inp, arr) {
 	
@@ -288,3 +318,4 @@ function autocomplete(inp, arr) {
  
   autocomplete(document.getElementById("search-input"), endpointUrl);
 
+ */
