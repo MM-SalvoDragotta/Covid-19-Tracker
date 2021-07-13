@@ -107,7 +107,6 @@ function renderChart (confirmed, recovered, deaths){
 	// console.log(covidDataChart);
 }
 
-
 var PreviousCountries = [];
   
 $("#submit").click(function(event){
@@ -134,14 +133,14 @@ $("#submit").click(function(event){
 			PreviousCountries.push(country);
 			localStorage.setItem("PreviousCountries", JSON.stringify(PreviousCountries));
 		}
-		console.log(PreviousCountries[1])
+		console.log(PreviousCountries)
+		renderLocalStorage()
 
 	});
 
 
-
 var renderLocalStorage = function(arrayCountries){
-
+	
 	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
 	const items = { ...localStorage };
 	var localStorageString = items.PreviousCountries 
@@ -149,7 +148,7 @@ var renderLocalStorage = function(arrayCountries){
 	for (var i=0; i<localStorageArray.length; i++ ) {
 		$(".previous").
 		append(`
-		<li><button id="${localStorageArray[i]}" class="previou-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>${localStorageArray[i]}</button></li>
+		<li><button id="${localStorageArray[i]}" class="button previous-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>${localStorageArray[i]}</button></li>
 		`)
 	}
 }
