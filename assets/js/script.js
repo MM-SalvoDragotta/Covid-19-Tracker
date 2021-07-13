@@ -57,24 +57,6 @@ function dataByCountry (country){
   });
 }
 
-const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=italy&date=2020-06-01`;
-	
-	//Fetch country data and display it
-	fetch(endpointUrl, options)
-	.then(response => {
-		return response.json();
-	})
-	.then((body) => {
-		console.log(body);
-		console.log(body[0].provinces)
-
-		renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
-
-	})
-	.catch((err) => {
-	console.log(err);
-});
-
 function dataByCountryDate (country, date){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;
 	countryName.textContent = toTitleCas(country);
@@ -84,11 +66,16 @@ function dataByCountryDate (country, date){
 		return response.json();
 	})
 	.then((body) => {
-		console.log(body);
-		console.log(body[0].provinces)
-
-		renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
-
+		console.log(body[0])
+		console.log(body[0].provinces[0].confirmed)
+		if (body[0].provinces[0].confirmed) {
+			renderChart(body[0].provinces[0].confirmed, body[0].provinces[0].recovered, body[0].provinces[0].deaths );
+			console.log(body[0].provinces[0].confirmed)
+			console.log(body[0])
+		} else {
+			msg.html("No data for this date")
+		}
+		
 	})
 	.catch((err) => {
 	console.log(err);
