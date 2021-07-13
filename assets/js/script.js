@@ -1,5 +1,7 @@
+
 const rapidApiKey = "689cdde1e7mshecdba67d4030dcfp1c88acjsn0cf409ea52a5";
 const rapidApiHost = "covid-19-data.p.rapidapi.com"
+var msg = $(".msg")
 
 const options = {
 	headers: {
@@ -52,10 +54,17 @@ function dataByCountry (country){
 	// console.log(body[0].recovered);
 		
 	})
-	.catch((err) => {
-	console.log(err);
-  });
-}
+	.catch((error) => {
+		console.log(error)
+		console.log(msg)
+		$(".msg").html ("Please search for a valid country");
+	});
+
+//	msg.textContent = "";
+//	form.reset();
+//	input.focus();
+};
+
 
 function dataByCountryDate (country, date){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;
@@ -211,10 +220,15 @@ function getCountries() {
 
 		
 	})
-	.catch((err) => {
-		console.log(err);
+	.catch((error) => {
+		console.log(error);
+		$(".msg").html ("Please search for a valid country");
 	});
+		
 };
+
+//	form.reset();
+//	input.focus();
 
 
 function init(){
@@ -320,6 +334,6 @@ function autocomplete(inp, arr) {
   }
 
  
-  autocomplete(document.getElementById("search-input"), endpointUrl);
+  //autocomplete(document.getElementById("search-input"), endpointUrl);
 
  */
