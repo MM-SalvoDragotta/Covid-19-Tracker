@@ -44,11 +44,13 @@
                     <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
                   </span>
                 </div>
+                <!-- Error message -->
+                <span class="msg"></span>
                 <!-- The auto populated list -->
                 <datalist id="browsers">
+                  <!-- The Countries list will auto populate here -->
                 </datalist>
               </div>
-  
             </div>
   
             <!-- This is the date options dropdown -->
@@ -88,6 +90,7 @@
                 <button id="submit" class="button is-link is-focused is-rounded">Submit</button>
               </div>
             </div>
+
           </div>
 
           <!-- This holds the previous countries card -->
@@ -99,16 +102,11 @@
               <div class="field">
                 <div class="control">
                   <ul class="previous">
-                    <li><button id="previous-country-submit" class="button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>-insert country name-</button></li>
-                    <li><button id="previous-country-submit" class="button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>-insert country name-</button></li>
-                  </ul>
-                  
+                    <!-- The previous countries button will generate here -->
+                  </ul>               
                 </div>
-
               </div>
-
             </div>
-
           </div>
 
         </div>
@@ -121,6 +119,7 @@
           <div class="container">
             <canvas id="myChart"></canvas>
           </div>
+
         </div>
             
       </div>
@@ -130,6 +129,7 @@
       <!-- The link to jquery -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     </body>
 
 </html>

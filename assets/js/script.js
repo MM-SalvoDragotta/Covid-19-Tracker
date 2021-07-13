@@ -149,7 +149,7 @@ var renderLocalStorage = function(arrayCountries){
 	for (var i=0; i<localStorageArray.length; i++ ) {
 		$(".previous").
 		append(`
-		<li><button id="${localStorageArray[i]}" class="previou-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>${localStorageArray[i]}</button></li>
+		<li><button id="${localStorageArray[i]}" class="button previous-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>${localStorageArray[i]}</button></li>
 		`)
 	}
 }
@@ -207,10 +207,6 @@ function init(){
 }
 
 init()
-
-
-
-
 
 
 
