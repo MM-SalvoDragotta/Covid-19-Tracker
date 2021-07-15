@@ -23,8 +23,8 @@ function toTitleCas (phrase) {
 	  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
 	  .join(' ');
   };
-// var array = []
 
+//Fetch Data By Country
 function dataByCountry (country){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
 	countryName.textContent = toTitleCas(country);
@@ -34,29 +34,14 @@ function dataByCountry (country){
 		return response.json();
 	})
 	.then((body) => {
-	// console.log(body);
-	// console.log(body[0].confirmed)
-	// myChart.destroy();
-	// var array = []
-	// array.push(body[0].confirmed);
-	// array.push(body[0].recovered);
-	// console.log(body[0].confirmed)
-	// console.log(array)
-	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
-	// console.log(body[0].confirmed);
-	// console.log(body[0].deaths);
-	// console.log(body[0].recovered);	
+	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );	
 	})
-
 	.catch((error) => {
 		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()		
 	});
-
-//	msg.textContent = "";
-//	form.reset();
-//	input.focus();
 };
 
+//Fetch Data By Country and Date
 function dataByCountryDate (country, date){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;
 	countryName.textContent = toTitleCas(country);
@@ -66,16 +51,11 @@ function dataByCountryDate (country, date){
 		return response.json();
 	})
 	.then((body) => {
-		console.log(body[0])
-		console.log(body[0].provinces[0].confirmed)
 		if (body[0].provinces[0].confirmed) {
 			renderChart(body[0].provinces[0].confirmed, body[0].provinces[0].recovered, body[0].provinces[0].deaths );
-			console.log(body[0].provinces[0].confirmed)
-			console.log(body[0])
 		} else {
 			$(".msg").html ("There is no data for this date");
 		}
-
 	})
 	.catch((err) => {
 	console.log(err);
@@ -108,39 +88,17 @@ function renderChart (confirmed, recovered, deaths){
 						display: true,
 						text: 'Confirmed Recovered Deaths '
 					},
-					// customPlugin : {
-					// 	id: 'custom_canvas_background_color',
-					// 	beforeDraw: (myChart) => {
-					// 		const ctx = myChart.canvas.getContext('2d');
-					// 		ctx.save();
-					// 		ctx.globalCompositeOperation = 'destination-over';
-					// 		ctx.fillStyle = 'black';
-					// 		ctx.fillRect(0, 0, myChart.width, myChart.height);
-					// 		ctx.restore();
-					// 	}
-
-				// },
-				// tooltip: {
-				// 	// Tooltip will only receive click events
-				// 	events: ['click']
-				//   }
+	
 			}
 		}
-
-
-	};	
+	};
 	var myChart = document.getElementById('myChart').getContext('2d');
-	covidDataChart = new Chart(myChart, barChartData);	
-	// console.log(covidDataChart);
+	covidDataChart = new Chart(myChart, barChartData);		
 }
 
 var PreviousCountries = [];
   
 $("#submit").click(function(event){
-	// console.log(event.target)
-	// console.log($(this).parentsUntil(".input").find("#search-input").val());
-	// var country = $(this).parentsUntil(".input").find("#search-input").val();
-	// var country = $(this).$('#browser option:selected').text();
 	var country = $("input[name=browser]").val();
 	var date = $("#date-input-start").val();
 				
