@@ -45,7 +45,7 @@
                   </span>
                 </div>
                 <!-- Error message -->
-                <span class="msg"></span>
+                <span hidden class="msg">Please enter a valid country</span>
                 <!-- The auto populated list -->
                 <datalist id="browsers">
                   <!-- The Countries list will auto populate here -->
@@ -77,12 +77,12 @@
             </div>
   
             <!-- This is the to date selector -->
-            <div class="field">
+           <!--  <div class="field"> -->
               <!-- The label -->
-              <label class="label">To Date:</label>
+             <!--  <label class="label">To Date:</label> -->
               <!-- The date selector -->
-              <input type="date" id="date-input-end" class="input is-link"/>
-            </div>
+             <!--  <input type="date" id="date-input-end" class="input is-link"/> -->
+           <!--  </div> -->
   
             <!-- This is the submit button -->
             <div class="field">
@@ -103,6 +103,7 @@
                 <div class="control">
                   <ul class="previous">
                     <!-- The previous countries button will generate here -->
+                    <li><button id="an-id" class="button previous-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country">Country Date</span> ❌</button></li>
                   </ul>               
                 </div>
               </div>

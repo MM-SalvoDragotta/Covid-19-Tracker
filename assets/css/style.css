@@ -48,3 +48,7 @@ h2 {
 li {
     padding: 0.25rem;
 }
+
+.msg {
+    visibility: visible;
+}
