@@ -286,5 +286,5 @@ function autocomplete(inp, arr) {
   }
 
  
-  autocomplete(document.getElementById("search-input"), endpointUrl);
+  autocomplete(document.getElementById("search-input"), arrayCountries);
 
