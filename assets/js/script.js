@@ -1,4 +1,3 @@
-
 const rapidApiKey = "689cdde1e7mshecdba67d4030dcfp1c88acjsn0cf409ea52a5";
 const rapidApiHost = "covid-19-data.p.rapidapi.com"
 var msg = $(".msg")
@@ -54,15 +53,38 @@ function dataByCountry (country){
 	})
 
 	.catch((error) => {
-		console.log(error)
-		console.log(msg)
-		
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()		
 	});
 
 //	msg.textContent = "";
 //	form.reset();
 //	input.focus();
 };
+
+function dataByCountryDate (country, date){
+	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;
+	countryName.textContent = toTitleCas(country);
+	//Fetch country data and display it
+	fetch(endpointUrl, options)
+	.then(response => {
+		return response.json();
+	})
+	.then((body) => {
+		console.log(body[0])
+		console.log(body[0].provinces[0].confirmed)
+		if (body[0].provinces[0].confirmed) {
+			renderChart(body[0].provinces[0].confirmed, body[0].provinces[0].recovered, body[0].provinces[0].deaths );
+			console.log(body[0].provinces[0].confirmed)
+			console.log(body[0])
+		} else {
+			$(".msg").html ("There is no data for this date");
+		}
+
+	})
+	.catch((err) => {
+	console.log(err);
+  });
+}
 
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
@@ -124,20 +146,26 @@ $("#submit").click(function(event){
 	// var country = $(this).parentsUntil(".input").find("#search-input").val();
 	// var country = $(this).$('#browser option:selected').text();
 	var country = $("input[name=browser]").val();
+	var date = $("#date-input-start").val();
 				
 		// console.log(country);
 		if (covidDataChart){
 			covidDataChart.destroy();	
 		}	
-		dataByCountry(country);
+		if (!date)  {
+			dataByCountry(country);
+		} else {
+			dataByCountryDate(country, date)
+		}
 		//get List of countries
 		var arrayCountries = $("option[option-country]");
 		// console.log(arrayCountries)
 
 		//Save to local Storage
 		
+		// if ($.inArray(country + " " + date, PreviousCountries)==-1){
+		// 	PreviousCountries.push(country + " " + date);
 		
-		// localStorage.setItem(country, JSON.stringify(country));
 		if ($.inArray(country, PreviousCountries)==-1){
 			PreviousCountries.push(country);
 			localStorage.setItem("PreviousCountries", JSON.stringify(PreviousCountries));
@@ -146,7 +174,6 @@ $("#submit").click(function(event){
 		renderLocalStorage()
 
 	});
-
 
 var renderLocalStorage = function(arrayCountries){
 	
@@ -188,7 +215,7 @@ function getCountries() {
 	})
 
 	.catch((error) => {
-		console.log(error);
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
 				
 	});
 		
@@ -202,104 +229,3 @@ function init(){
 init()
 
 
-<<<<<<< HEAD
-=======
-
-
-function autocomplete(inp, arr) {
-	
-	var currentFocus;
-
-	inp.addEventListener("input", function(e) {
-		var a, b, i, val = this.value;
-		
-		closeAllLists();
-		if (!val) { return false;}
-		currentFocus = -1;
-	
-		a = document.createElement("DIV");
-		a.setAttribute("id", this.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-		
-		this.parentNode.appendChild(a);
-	
-		for (i = 0; i < arr.length; i++) {
-		 
-		  if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-			
-			b = document.createElement("DIV");
-		
-			b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-			b.innerHTML += arr[i].substr(val.length);
-			
-			b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-			
-			b.addEventListener("click", function(e) {
-				
-				inp.value = this.getElementsByTagName("input")[0].value;
-				
-				closeAllLists();
-			});
-			a.appendChild(b);
-		  }
-		}
-	});
-
-	inp.addEventListener("keydown", function(e) {
-		var x = document.getElementById(this.id + "autocomplete-list");
-		if (x) x = x.getElementsByTagName("div");
-		if (e.keyCode == 40) {
-		 
-		  currentFocus++;
-		 
-		  addActive(x);
-		} else if (e.keyCode == 38) { 
-		  
-		  currentFocus--;
-		 
-		  addActive(x);
-		} else if (e.keyCode == 13) {
-		  
-		  e.preventDefault();
-		  if (currentFocus > -1) {
-		
-			if (x) x[currentFocus].click();
-		  }
-		}
-	});
-	function addActive(x) {
-
-	  if (!x) return false;
-	 
-	  removeActive(x);
-	  if (currentFocus >= x.length) currentFocus = 0;
-	  if (currentFocus < 0) currentFocus = (x.length - 1);
-
-	  x[currentFocus].classList.add("autocomplete-active");
-	}
-	function removeActive(x) {
-	  
-	  for (var i = 0; i < x.length; i++) {
-		x[i].classList.remove("autocomplete-active");
-	  }
-	}
-	function closeAllLists(elmnt) {
-	 
-	  var x = document.getElementsByClassName("autocomplete-items");
-	  for (var i = 0; i < x.length; i++) {
-		if (elmnt != x[i] && elmnt != inp) {
-		  x[i].parentNode.removeChild(x[i]);
-		}
-	  }
-	}
-	
-	document.addEventListener("click", function (e) {
-		closeAllLists(e.target);
-	});
-  }
-
-
- 
-  //autocomplete(document.getElementById("search-input"), endpointUrl);
-
->>>>>>> 7c24ac62e5adebc9111efc52a18dec512b93fcaa
