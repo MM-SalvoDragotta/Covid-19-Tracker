@@ -52,3 +52,9 @@ li {
 .msg {
     visibility: visible;
 }
+
+/* Styling the footer */
+.custom-footer {
+    background-color: rgba(80, 86, 173, 0.397);
+    padding: 10px;
+}

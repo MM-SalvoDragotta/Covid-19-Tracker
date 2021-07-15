@@ -53,14 +53,10 @@ function dataByCountry (country){
 	})
 
 	.catch((error) => {
-<<<<<<< HEAD
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()		
-=======
 		console.log(error)
 		console.log(msg)
 		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
 
->>>>>>> 5373e480d8ac733b7577151c6f742590a258aa72
 	});
 
 //	msg.textContent = "";
@@ -222,15 +218,10 @@ function getCountries() {
 	})
 
 	.catch((error) => {
-<<<<<<< HEAD
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
-				
-=======
 		console.log(error);
 
 		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show();		
 
->>>>>>> 5373e480d8ac733b7577151c6f742590a258aa72
 	});
 		
 };
@@ -246,7 +237,3 @@ function refreshPage(){
     window.getElementById(".refresh").reload();
 }   
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5373e480d8ac733b7577151c6f742590a258aa72
