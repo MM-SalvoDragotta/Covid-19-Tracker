@@ -11,10 +11,6 @@ const options = {
 
 var countryName = document.getElementById('results-text');
 
-// var country = "USA";
-// var country2 = $('#search-input');
-// console.log(country2.value);
-
 const labels = ['Confirmed', 'Recovered', 'Deaths' ];
 
 var covidDataChart = "";
@@ -53,10 +49,7 @@ function dataByCountry (country){
 	})
 
 	.catch((error) => {
-		console.log(error)
-		console.log(msg)
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
-
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()		
 	});
 
 //	msg.textContent = "";
@@ -218,10 +211,8 @@ function getCountries() {
 	})
 
 	.catch((error) => {
-		console.log(error);
-
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show();		
-
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
+				
 	});
 		
 };
