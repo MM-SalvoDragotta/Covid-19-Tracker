@@ -12,8 +12,8 @@ const options = {
 var countryName = document.getElementById('results-text');
 
 const labels = ['Confirmed', 'Recovered', 'Deaths' ];
-
 var covidDataChart = "";
+var arrayCountries = [];
 
 //https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
 function toTitleCas (phrase) {
@@ -64,10 +64,11 @@ function dataByCountryDate (country, date){
 
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
-function renderChart (confirmed, recovered, deaths){	
-	// countryData = [30903, 910, 29466]
+function renderChart (confirmed, recovered, deaths){
+	var chartType = $( "#chart-type option:selected" ).text();
+		
 	var barChartData ={
-		type: 'bar', //bar, horizontalBar, pie, line, donut, radar, polarArea , doughnut
+		type: chartType, //bar, horizontalBar, pie, line, donut, radar, polarArea , doughnut
 			data: {
 			labels: labels,
 			datasets: [{
@@ -78,14 +79,16 @@ function renderChart (confirmed, recovered, deaths){
 			hoverOffset: 4
 		}]		 
 		},
-			options: {
-				// events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+			options: {				
 				plugins: {
 					legend: {
-						display: false
+						display: true,						
+						labels:{
+							color: 'rgb(255, 99, 132)'
+						}
 					},
 					subtitle: {
-						display: true,
+						display: false,
 						text: 'Confirmed Recovered Deaths '
 					},
 	
@@ -96,7 +99,7 @@ function renderChart (confirmed, recovered, deaths){
 	covidDataChart = new Chart(myChart, barChartData);		
 }
 
-var PreviousCountries = [];
+var SearchedCountries = [];
   
 $("#submit").click(function(event){
 	var country = $("input[name=browser]").val();
@@ -117,14 +120,14 @@ $("#submit").click(function(event){
 
 		//Save to local Storage
 		
-		// if ($.inArray(country + " " + date, PreviousCountries)==-1){
-		// 	PreviousCountries.push(country + " " + date);
+		// if ($.inArray(country + " " + date, SearchedCountries)==-1){
+		// 	SearchedCountries.push(country + " " + date);
 		
-		if ($.inArray(country, PreviousCountries)==-1){
-			PreviousCountries.push(country);
-			localStorage.setItem("PreviousCountries", JSON.stringify(PreviousCountries));
+		if ($.inArray(country, SearchedCountries)==-1){
+			SearchedCountries.push(country);
+			localStorage.setItem("SearchedCountries", JSON.stringify(SearchedCountries));
 		}
-		console.log(PreviousCountries)
+		console.log(SearchedCountries)
 		renderLocalStorage()
 
 	});
@@ -133,7 +136,7 @@ var renderLocalStorage = function(arrayCountries){
 	
 	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
 	const items = { ...localStorage };
-	var localStorageString = items.PreviousCountries 
+	var localStorageString = items.SearchedCountries 
 	var localStorageArray = JSON.parse(localStorageString)
 	for (var i=0; i<localStorageArray.length; i++ ) {
 		$(".previous").
@@ -143,7 +146,7 @@ var renderLocalStorage = function(arrayCountries){
 	}
 }
 
-const arrayCountries = [];
+
 
 // Add Countries to dropdown
 function getCountries() {
@@ -153,10 +156,7 @@ function getCountries() {
 	.then(response => {
 		return response.json();
 	})
-	.then((body) => {
-		// console.log(body);
-		// console.log(body[0].name)
-		// arrayCountries = body	
+	.then((body) => {	
 		for (var i = 0 ; i < body.length ; i++ ) {
 			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);
 			arrayCountries.push(body[i].name)

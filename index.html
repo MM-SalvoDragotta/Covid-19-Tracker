@@ -33,7 +33,7 @@
             <div class="field">
               <div class="control">
                 <!-- The label -->
-                <label for="search-input" class="label">Enter Country:</label>
+                <label for="search-input" class="label">Search By Country:</label>
                 <!-- This is the search function -->
                 <div class="control has-icons-right">
                   <!-- Search bar -->
@@ -59,13 +59,15 @@
             <!-- This is the date options dropdown -->
             <div class="field">
               <!-- The label -->
-              <label class="label">Date Option:</label>
+              <label class="label">Chart Display Type:</label>
               <div class="control">
                 <div class="select is-link">
                   <!-- the dropdown options -->
-                  <select>
-                    <option>Date Range</option>
-                    <option>All Time</option>
+                  <select id="chart-type">                                       
+                    <option>pie</option>                    
+                    <option>doughnut</option>                    
+                    <option>polarArea</option>                     
+                    <option>bar</option> 
                   </select>
                 </div>
               </div>
@@ -74,7 +76,7 @@
             <!-- This is the from date selector  -->
             <div class="field">
               <!-- The label -->
-              <label class="label">From Date:</label>
+              <label class="label">Date:</label>
               <!-- The date selector -->
               <input type="date" id="date-input-start" class="input is-link"/>
             </div>
