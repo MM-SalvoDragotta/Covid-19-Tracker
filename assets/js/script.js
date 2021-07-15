@@ -50,13 +50,13 @@ function dataByCountry (country){
 	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );
 	// console.log(body[0].confirmed);
 	// console.log(body[0].deaths);
-	// console.log(body[0].recovered);
-		
+	// console.log(body[0].recovered);	
 	})
+
 	.catch((error) => {
 		console.log(error)
 		console.log(msg)
-		$(".msg").html ("Please search for a valid country");
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
 	});
 
 //	msg.textContent = "";
@@ -175,7 +175,7 @@ function getCountries() {
 	.then((body) => {
 		// console.log(body);
 		// console.log(body[0].name)
-		// arrayCountries = body		
+		// arrayCountries = body	
 		for (var i = 0 ; i < body.length ; i++ ) {
 			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);
 			arrayCountries.push(body[i].name)
@@ -186,16 +186,13 @@ function getCountries() {
 
 		
 	})
+
 	.catch((error) => {
 		console.log(error);
-		$(".msg").html ("Please search for a valid country");
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show();		
 	});
 		
 };
-
-//	form.reset();
-//	input.focus();
-
 
 function init(){
 	getCountries();
@@ -298,6 +295,10 @@ function autocomplete(inp, arr) {
 		closeAllLists(e.target);
 	});
   }
+
+function refreshPage(){
+    window.getElementById(".refresh").reload();
+}   
 
  
   //autocomplete(document.getElementById("search-input"), endpointUrl);
