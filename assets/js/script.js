@@ -56,7 +56,7 @@ function dataByCountry (country){
 	.catch((error) => {
 		console.log(error)
 		console.log(msg)
-		$(".msg").html ("Please search for a valid country").show();
+		
 	});
 
 //	msg.textContent = "";
@@ -189,7 +189,7 @@ function getCountries() {
 
 	.catch((error) => {
 		console.log(error);
-		$(".msg").html ("Please search for a valid country").show();		
+				
 	});
 		
 };
