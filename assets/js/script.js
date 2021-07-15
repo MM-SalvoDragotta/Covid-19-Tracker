@@ -1,6 +1,5 @@
 const rapidApiKey = "689cdde1e7mshecdba67d4030dcfp1c88acjsn0cf409ea52a5";
 const rapidApiHost = "covid-19-data.p.rapidapi.com"
-var msg = $(".msg")
 
 const options = {
 	headers: {
@@ -9,11 +8,15 @@ const options = {
 	},
   };
 
+const searchList = document.querySelector("#search-list");
 var countryName = document.getElementById('results-text');
+var msg = $(".msg")
 
 const labels = ['Confirmed', 'Recovered', 'Deaths' ];
+
 var covidDataChart = "";
 var arrayCountries = [];
+var SearchedCountries = [];
 
 //https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
 function toTitleCas (phrase) {
@@ -25,7 +28,7 @@ function toTitleCas (phrase) {
   };
 
 //Fetch Data By Country
-function dataByCountry (country){
+var dataByCountry = function (country){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
 	countryName.textContent = toTitleCas(country);
 	//Fetch country data and display it
@@ -54,14 +57,13 @@ function dataByCountryDate (country, date){
 		if (body[0].provinces[0].confirmed) {
 			renderChart(body[0].provinces[0].confirmed, body[0].provinces[0].recovered, body[0].provinces[0].deaths );
 		} else {
-			$(".msg").html ("There is no data for this date");
+			$(".msg" && ".refresh").html ("There is no data for this date .Please click to refresh").show()
 		}
 	})
 	.catch((err) => {
 	console.log(err);
   });
 }
-
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
 function renderChart (confirmed, recovered, deaths){
@@ -97,56 +99,61 @@ function renderChart (confirmed, recovered, deaths){
 	};
 	var myChart = document.getElementById('myChart').getContext('2d');
 	covidDataChart = new Chart(myChart, barChartData);		
-}
+}  
 
-var SearchedCountries = [];
-  
-$("#submit").click(function(event){
-	var country = $("input[name=browser]").val();
-	var date = $("#date-input-start").val();
-				
-		// console.log(country);
-		if (covidDataChart){
-			covidDataChart.destroy();	
-		}	
-		if (!date)  {
-			dataByCountry(country);
-		} else {
-			dataByCountryDate(country, date)
-		}
-		//get List of countries
-		var arrayCountries = $("option[option-country]");
-		// console.log(arrayCountries)
+var renderLocalStorage = function(){
 
-		//Save to local Storage
-		
-		// if ($.inArray(country + " " + date, SearchedCountries)==-1){
-		// 	SearchedCountries.push(country + " " + date);
-		
-		if ($.inArray(country, SearchedCountries)==-1){
-			SearchedCountries.push(country);
-			localStorage.setItem("SearchedCountries", JSON.stringify(SearchedCountries));
-		}
-		console.log(SearchedCountries)
-		renderLocalStorage()
-
-	});
-
-var renderLocalStorage = function(arrayCountries){
+	SearchedCountries = SearchedCountries.map(function(x){ return toTitleCas(x); })
+	SearchedCountries.sort()
+	//https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+	var unique = SearchedCountries.filter((v, i, a) => a.indexOf(v) === i);
 	
-	//https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
-	const items = { ...localStorage };
-	var localStorageString = items.SearchedCountries 
-	var localStorageArray = JSON.parse(localStorageString)
-	for (var i=0; i<localStorageArray.length; i++ ) {
-		$(".previous").
+	for (var i=0; i<unique.length; i++ ) {
+		$("#search-list").
 		append(`
-		<li><button id="${localStorageArray[i]}" class="button previous-button is-small is-warning is-light is-focused is-rounded"><span id="previous-country"></span>${localStorageArray[i]}</button></li>
+		<li data-index=${i} class="saved-country button previous-button is-small is-warning is-light is-focused is-rounded">${SearchedCountries[i]}
+		<button class="previous-country">❌</button>
+		</li>
 		`)
 	}
 }
 
+function storeSearches() {
+	// Stringify and set key in localStorage to theSearches array
+	localStorage.setItem("SearchedCountries", JSON.stringify(SearchedCountries));
+  }
 
+function searchListRender(){
+	var storedSearches = JSON.parse(localStorage.getItem("SearchedCountries"));
+	// If theScores were retrieved from localStorage, update the theSearches array to it
+	if (storedSearches !== null) {
+	  storedSearches = storedSearches.map(function(x){ return toTitleCas(x); })
+	  storedSearches.sort()
+	  var unique = storedSearches.filter((v, i, a) => a.indexOf(v) === i);
+  
+	  SearchedCountries = unique;
+	  localStorage.setItem("SearchedCountries", JSON.stringify(unique));
+	}
+	// This is a helper function that will render Searches to the DOM
+	renderLocalStorage();
+	searchLink ();
+  }
+
+function AddCountryToStorage(country){
+	SearchedCountries.push(country)
+	$('#search-list').empty()
+	SearchedCountries = SearchedCountries.map(function(x){ return x.toUpperCase(); })
+	SearchedCountries.sort()
+	var unique = SearchedCountries.filter((v, i, a) => a.indexOf(v) === i);
+	
+	SearchedCountries = unique;
+	localStorage.setItem("SearchedCountries", JSON.stringify(unique));
+	
+	searchListRender()  
+  
+	const url = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
+	return url
+  }
 
 // Add Countries to dropdown
 function getCountries() {
@@ -163,7 +170,7 @@ function getCountries() {
 			// `<option id=${body[i].name} value=${body[i].name}>`		
 		};
 		
-		renderLocalStorage(arrayCountries)
+		renderLocalStorage()
 
 		
 	})
@@ -175,14 +182,81 @@ function getCountries() {
 		
 };
 
-function init(){
-	getCountries();
-	
-}
 
-init()
 
 function refreshPage(){
     window.getElementById(".refresh").reload();
 }   
 
+
+//remove the saved search
+searchList.addEventListener("click", function(event) {
+	var element = event.target;
+	// Checks if element is a button
+	if (element.classList.contains("saved-country")){
+	
+	  // Get its data-index value and remove the search element from the list
+	  var index = element.parentElement.getAttribute("data-index");
+	  SearchedCountries.splice(index, 1);
+	  $('#search-list').empty()
+	  // Store updated theScores in localStorage, re-render the list
+	  storeSearches();
+	  searchListRender();    
+	}else{
+	  return
+	}
+  });
+
+$("#submit").click(function(event){
+	var country = $("input[name=browser]").val();
+	if (country === "") {
+		return;
+	  }  
+	var date = $("#date-input-start").val();				
+	// console.log(country);
+	if (covidDataChart){
+		covidDataChart.destroy();	
+	}	
+	if (!date)  {
+		AddCountryToStorage(country)
+		dataByCountry(country);
+		
+	} else {
+		AddCountryToStorage(country)
+		dataByCountryDate(country, date)		
+	}
+		
+		// if ($.inArray(country + " " + date, SearchedCountries)==-1){
+		// 	SearchedCountries.push(country + " " + date);
+		
+		// if ($.inArray(country, SearchedCountries)==-1){
+		// 	SearchedCountries.push(country);
+		// 	localStorage.setItem("SearchedCountries", JSON.stringify(SearchedCountries));
+		// }		
+
+	});
+
+var searchLink = function(){
+	$("li.saved-country").on("click",function(event) {  
+		var element = event.target; 
+		if (!element.classList.contains("saved-country")){
+		// console.log(element.textContent)
+		var country= element.childNodes[0].nodeValue.trim()
+		console.log(country) 
+		console.log('testing');
+		var url = AddCountryToStorage(country)
+		dataByCountry(url)
+		}else{
+		return
+		}
+	
+	});
+	}
+
+
+	function init(){
+		getCountries();	
+		searchListRender()		
+	}
+
+	init()
