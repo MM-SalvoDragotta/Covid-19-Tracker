@@ -202,8 +202,6 @@ function init(){
 init()
 
 
-<<<<<<< HEAD
-=======
 
 
 function autocomplete(inp, arr) {
@@ -298,8 +296,6 @@ function autocomplete(inp, arr) {
 	});
   }
 
-
  
   //autocomplete(document.getElementById("search-input"), endpointUrl);
 
->>>>>>> 7c24ac62e5adebc9111efc52a18dec512b93fcaa
