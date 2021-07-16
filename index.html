@@ -12,13 +12,16 @@
         <!-- The link to chart js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>
         <!-- The link to css -->   
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" 
+          integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
         <link
-        rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-        crossorigin="anonymous"
-        />
-        <link  
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous"
+        />       
         <link rel="stylesheet" href="assets/css/style.css">
         <!-- The link to jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -121,7 +124,7 @@
                   <ul id="search-list" >
                     <!-- The previous countries button will generate here -->                    
                   </ul>  
-                               
+
                 </div>
               </div>
             </div>
@@ -137,6 +140,14 @@
           <div class="container">
             <canvas id="myChart"></canvas>
           </div>
+          <a id="download"
+          download="BcrpChart.jpg"
+          href=""
+          class="btn btn-primary float-right bg-flat-color-1"
+          title="Download Chart">
+          <!-- Download Icon -->
+          <i class="fa fa-download"></i>
+          </a>
 
         </div>
             

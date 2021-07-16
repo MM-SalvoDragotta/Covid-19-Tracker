@@ -18,6 +18,8 @@ var covidDataChart = "";
 var arrayCountries = [];
 var SearchedCountries = [];
 
+
+
 //https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
 function toTitleCas (phrase) {
 	return phrase
@@ -81,9 +83,10 @@ function renderChart (confirmed, recovered, deaths){
 			hoverOffset: 4
 		}]		 
 		},
-			options: {				
+			options: {	
+				// onAnimationProgress: drawSegmentValues,
 				plugins: {
-					legend: {
+					legend: {						
 						display: true,						
 						labels:{
 							color: 'rgb(255, 99, 132)'
@@ -93,13 +96,40 @@ function renderChart (confirmed, recovered, deaths){
 						display: false,
 						text: 'Confirmed Recovered Deaths '
 					},
-	
+					animation : {
+						onComplete : downloadChart()
+					},
+					
+					
+			},
+			plugins: [ChartDataLabels],
+			options: {
+				
 			}
 		}
 	};
 	var myChart = document.getElementById('myChart').getContext('2d');
-	covidDataChart = new Chart(myChart, barChartData);		
+	
+	covidDataChart = new Chart(myChart, barChartData);	
+	covidDataChart.plugins.register(ChartDataLabels);
+
 }  
+
+function downloadChart(){
+	document.getElementById("download").addEventListener('click', function(){
+	var url_base64jp = document.getElementById("myChart").toDataURL("image/jpg");
+	var a =  document.getElementById("download");
+	a.href = url_base64jp;
+  });
+}
+
+
+
+function fillText(){
+	var ctx = this.chart.ctx;
+	ctx.fillStyle = '#fff';
+	ctx.fillText(percent, model.x + x, model.y + y + 15);
+}
 
 var renderLocalStorage = function(){
 
@@ -246,10 +276,13 @@ var searchLink = function(){
 	});
 	}
 
+//Download Chart Image
+
+
 	function init(){
 		getCountries();	
 		searchListRender();
-		searchLink();
+		// searchLink();
 				
 	}
 
