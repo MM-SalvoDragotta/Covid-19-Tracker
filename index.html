@@ -13,10 +13,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>
         <script src="./assets/js/chartjs-plugin-datalabels.js"></script>
         <!-- The link to css -->   
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" 
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" 
           integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" 
           crossorigin="anonymous" referrerpolicy="no-referrer">
-        </script>
+        </script> -->
         <link
           rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -52,10 +52,10 @@
                 <!-- This is the search function -->
                 <div class="control has-icons-right">
                   <!-- Search bar -->
-                  <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia">
+                  <input list="browsers" name="browser" id="search-input" class="input is-link" type="text" placeholder="Australia" >
                   <!-- Clear button -->
                   <span class="icon is-small is-right">
-                    <button onclick="document.getElementById('search-input').value = ''" class="delete is-small"></button>
+                    <button id="clear" class="delete is-small"></button>
                   </span>
                 </div>
                 <!-- Error message -->
@@ -144,7 +144,7 @@
           <a id="download"
           download="Covid-19-Tracker_Chart.jpg"
           href=""
-          class="btn btn-primary float-right bg-flat-color-1"
+          class="btn btn-primary float-right bg-flat-color-1 hide"
           title="Download Chart">
           <!-- Download Icon -->
           <i class="fa fa-download"></i>

@@ -10,6 +10,12 @@ const options = {
 
 const searchList = document.querySelector("#search-list");
 var countryName = document.getElementById('results-text');
+var input = document.getElementById('search-input');
+var invalidCountryMsg = document.querySelector(".refresh");
+var downloadButton = $('.hide')
+// console.log(invalidCountryMsg)
+// console.log(invalidCountryMsg.html)
+
 var msg = $(".msg")
 
 const labels = ['Confirmed', 'Recovered', 'Deaths' ];
@@ -17,8 +23,32 @@ const labels = ['Confirmed', 'Recovered', 'Deaths' ];
 var covidDataChart = "";
 var arrayCountries = [];
 var SearchedCountries = [];
+var errorWrongCountry = false
 
+var m = moment()
+var  mFormat = moment()
 
+// var CurrentDate = moment();
+
+// console.log(CurrentDate)
+// console.log(CurrentDate.format('Do MMMM YYYY'))
+
+//https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
+function remove(arrOriginal, elementToRemove){
+    return arrOriginal.filter(function(el){return el !== elementToRemove});
+}
+
+function removeCountryAndRender(){
+	var removeThis = $("input[name=browser]").val()
+	// console.log(removeThis)
+	SearchedCountries = JSON.parse(localStorage.getItem("SearchedCountries"));
+	var cleanArray = remove(SearchedCountries, toTitleCas(removeThis));			
+	localStorage.setItem("SearchedCountries", JSON.stringify(cleanArray));
+	$('#search-list').empty();
+	searchListRender();	
+	
+	$("#browsers option").value = ''
+  }
 
 //https://stackoverflow.com/questions/32589197/how-can-i-capitalize-the-first-letter-of-each-word-in-a-string-using-javascript
 function toTitleCas (phrase) {
@@ -31,6 +61,7 @@ function toTitleCas (phrase) {
 
 //Fetch Data By Country
 var dataByCountry = function (country){
+	
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/country?name=${country}`;
 	countryName.textContent = toTitleCas(country);
 	//Fetch country data and display it
@@ -40,16 +71,25 @@ var dataByCountry = function (country){
 	})
 	.then((body) => {
 	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );	
+	// downloadButton.style.display = "inline-block";
 	})
-	.catch((error) => {
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()		
+	.catch(() => {	
+		removeCountryAndRender();
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show();	
+		countryName.textContent ="";
 	});
 };
 
 //Fetch Data By Country and Date
 function dataByCountryDate (country, date){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;
-	countryName.textContent = toTitleCas(country);
+	// countryName.textContent = toTitleCas(country);
+	m = moment(date, 'YYYY-MM-DD')
+	mFormat = m.format('Do MMMM YYYY');	
+	console.log(country) 
+	console.log(mFormat) 
+	countryName.textContent = country + " - " + mFormat
+	
 	//Fetch country data and display it
 	fetch(endpointUrl, options)
 	.then(response => {
@@ -69,26 +109,33 @@ function dataByCountryDate (country, date){
 
 //helpful tute on how to use charts.js: https://www.youtube.com/watch?v=sE08f4iuOhA 
 function renderChart (confirmed, recovered, deaths){
-	var chartType = $( "#chart-type option:selected" ).text();
+	var chartType = $("#chart-type option:selected" ).text();
+	
 		
 	var barChartData ={
 		type: chartType, //bar, horizontalBar, pie, line, donut, radar, polarArea , doughnut
 		data: {
 		labels: labels,
 		datasets: [{
-		data: [confirmed, recovered, deaths ],
-		backgroundColor: ["blue" , "green", "red"],
-		borderColor: ["black" , "black" , "black" ],
-		borderWidth: 1.5,
-		hoverOffset: 4
-		}]		 
+			data: [confirmed, recovered, deaths ],
+			backgroundColor: ["blue" , "green", "red"],
+			borderColor: ["black" , "black" , "black" ],
+			borderWidth: 1.5,
+			hoverOffset: 4,
+			label: 'Confirmed',
+			}]
+				 
 		},
-			options: {	
-				plugins: {
+			//Configutation options
+			options: {					
 					legend: {						
-						display: true,						
+						display: true,
+						position:'right',	
+						padding:500,						
 						labels:{
-							color: 'rgb(255, 99, 132)'
+							color: 'rgb(255, 99, 132)',
+							font : {size:24},						
+													
 						}
 					},
 					subtitle: {
@@ -97,15 +144,37 @@ function renderChart (confirmed, recovered, deaths){
 					},
 					animation : {
 						onComplete : downloadChart()
-					},			
-			},
+					},
+					scales: {
+						yAxes: [{
+						  ticks: {
+							beginAtZero: true
+						  }
+						}]
+					  },
+					  title: {
+						display: true,
+						text: 'COVID-19 API'
+					},		
+			
 			
 		}
 	};
 	var myChart = document.getElementById('myChart').getContext('2d');
 	
 	covidDataChart = new Chart(myChart, barChartData);	
-	}  
+	
+
+	if( chartType == "pie" || chartType =="doughnut" || chartType =="polarArea" ){
+		covidDataChart.canvas.parentNode.style.height = '600px';
+		covidDataChart.canvas.parentNode.style.width = '600px';
+	}
+
+	if( chartType == "bar" ){
+		covidDataChart.canvas.parentNode.style.height = '800px';
+		covidDataChart.canvas.parentNode.style.width = '800px';
+	}
+}  
 
 //https://dev.to/noemelo/how-to-save-chart-as-image-chart-js-2l0i
 //https://github.com/NoeMelo/Chart.js
@@ -116,7 +185,6 @@ function downloadChart(){
 	a.href = url_base64jp;
   });
 }
-
 
 var renderLocalStorage = function(){
 
@@ -156,8 +224,13 @@ function searchListRender(){
 	searchLink ();
   }
 
-function AddCountryToStorage(country){
-	SearchedCountries.push(country)
+function AddCountryToStorage(country, date){
+	if (!date){
+		SearchedCountries.push(country)
+	} else {
+		SearchedCountries.push(country + "_" + date)
+	}
+	
 	$('#search-list').empty()
 	SearchedCountries = SearchedCountries.map(function(x){ return x.toUpperCase(); })
 	SearchedCountries.sort()
@@ -188,14 +261,16 @@ function getCountries() {
 		};			
 	})
 	.catch((error) => {
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()				
+		$(".msg" && ".refresh").html ("Get Countries failed").show()				
 	});		
 };
 
-function refreshPage(){
-    window.getElementById(".refresh").reload();
-}   
+//Clear input
+$("#clear").click(function(){
+	input.value = '';		
+});
 
+  
 //remove the saved search
 searchList.addEventListener("click", function(event) {
 	var element = event.target;
@@ -220,58 +295,62 @@ $("#submit").click(function(event){
 		return;
 	  }  
 	var date = $("#date-input-start").val();				
-	// console.log(country);
+	console.log(date);
 	if (covidDataChart){
 		covidDataChart.destroy();	
 	}	
-	if (!date)  {
-		AddCountryToStorage(country)
-		dataByCountry(country);
-		
-	} else {
-		AddCountryToStorage(country)
-		dataByCountryDate(country, date)		
-	}		
+	try {
+		if (!date)  {
+			AddCountryToStorage(country,date)
+			dataByCountry(country);
+			
+		} else {
+			AddCountryToStorage(country, date)
+			dataByCountryDate(country, date)		
+		}	
+	}	
+	catch (e){
+		console.log(e)
+	}
 });
 
 var searchLink = function(){
 	$("li.saved-search").on("click",function(event) {  
-		var element = event.target; 
+		var element = event.target;
+		var country = "";
+		var date = "" 
 		if (element.classList.contains("saved-search")){
 		// console.log(element.textContent)
-		var country= element.childNodes[0].nodeValue.trim()
-		console.log(country) 
-		console.log('testing');
-		// var url = AddCountryToStorage(country)
-		// renderLocalStorage();
+		var storedString= element.childNodes[0].nodeValue.trim()
+		if (storedString.indexOf("-")==-1){
+			country = storedString;
+		} else {
+			var spliString = storedString.split("_");
+			country = spliString[0]
+			date = spliString[1]
+		}	
+		
+
 		if (covidDataChart){
 			covidDataChart.destroy();	
 		}	
-		// if (!date)  {
-		// 	AddCountryToStorage(country)
-		// 	dataByCountry(country);
+		if (!date)  {
+			dataByCountry(country);
 			
-		// } else {
-		// 	AddCountryToStorage(country)
-		// 	dataByCountryDate(country, date)		
-		// }	
-		dataByCountry(country)
-
+		} else if (date){			
+			dataByCountryDate(country, date)		
+		}
 		}else{
 		return
 		}	
 	});
 	}
 
-//Download Chart Image
-
-
-	function init(){
+function init(){
 		getCountries();	
-		searchListRender();
-		// searchLink();
+		searchListRender();		
 				
 	}
 
-	init()
+init()
 	
