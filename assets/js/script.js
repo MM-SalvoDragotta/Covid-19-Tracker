@@ -73,18 +73,17 @@ function renderChart (confirmed, recovered, deaths){
 		
 	var barChartData ={
 		type: chartType, //bar, horizontalBar, pie, line, donut, radar, polarArea , doughnut
-			data: {
-			labels: labels,
-			datasets: [{
-			data: [confirmed, recovered, deaths ],
-			backgroundColor: ["blue" , "green", "red"],
-			borderColor: ["black" , "black" , "black" ],
-			borderWidth: 1.5,
-			hoverOffset: 4
+		data: {
+		labels: labels,
+		datasets: [{
+		data: [confirmed, recovered, deaths ],
+		backgroundColor: ["blue" , "green", "red"],
+		borderColor: ["black" , "black" , "black" ],
+		borderWidth: 1.5,
+		hoverOffset: 4
 		}]		 
 		},
 			options: {	
-				// onAnimationProgress: drawSegmentValues,
 				plugins: {
 					legend: {						
 						display: true,						
@@ -98,23 +97,18 @@ function renderChart (confirmed, recovered, deaths){
 					},
 					animation : {
 						onComplete : downloadChart()
-					},
-					
-					
+					},			
 			},
-			plugins: [ChartDataLabels],
-			options: {
-				
-			}
+			
 		}
 	};
 	var myChart = document.getElementById('myChart').getContext('2d');
 	
 	covidDataChart = new Chart(myChart, barChartData);	
-	covidDataChart.plugins.register(ChartDataLabels);
+	}  
 
-}  
-
+//https://dev.to/noemelo/how-to-save-chart-as-image-chart-js-2l0i
+//https://github.com/NoeMelo/Chart.js
 function downloadChart(){
 	document.getElementById("download").addEventListener('click', function(){
 	var url_base64jp = document.getElementById("myChart").toDataURL("image/jpg");
@@ -123,13 +117,6 @@ function downloadChart(){
   });
 }
 
-
-
-function fillText(){
-	var ctx = this.chart.ctx;
-	ctx.fillStyle = '#fff';
-	ctx.fillText(percent, model.x + x, model.y + y + 15);
-}
 
 var renderLocalStorage = function(){
 
