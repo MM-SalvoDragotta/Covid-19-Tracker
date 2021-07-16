@@ -5,22 +5,33 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="./assets/images/coronavirus.ico "/>
+        <link rel="apple-touch-icon" href="./assets/images/coronavirus.png"/>
         <!-- The link to bulma styles -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
         <!-- The link to chart js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>
-        <!-- The link to css -->        
+        <!-- The link to css -->   
+        <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous"
+        />
+        <link  
         <link rel="stylesheet" href="assets/css/style.css">
         <!-- The link to jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
         <title>COVID-19 Tracker</title>
     </head>
 
     <body>
 
       <!-- This is the header of the page that displays the title "Covid-19 Tracker" -->
-      <header>
-        <h1 class="title is-1">Covid-19 Tracker</h1>
+      <header >
+        <!-- https://www.w3schools.com/icons/fontawesome5_icons_medical.asp -->
+        <h1 class="title is-1 p-5"><i class="fas fa-biohazard"></i>  Covid-19 Tracker  </h1>         
       </header>
 
       <!-- This sets and holds the first row of columns -->
@@ -106,10 +117,11 @@
               <!-- The previous countries buttons -->
               <div class="field">
                 <div class="control">
+
                   <ul id="search-list" >
-                    <!-- The previous countries button will generate here -->
-                    <!-- class="previous" -->
-                  </ul>               
+                    <!-- The previous countries button will generate here -->                    
+                  </ul>  
+                               
                 </div>
               </div>
             </div>
@@ -137,12 +149,15 @@
         
       </footer>
         
-      <!-- The link to the javascript -->
-      <script src="./assets/js/script.js"></script>
+    
 
       <!-- The link to jquery -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- The link to the javascript -->
+        <script src="./assets/js/script.js"></script>
 
     </body>
 

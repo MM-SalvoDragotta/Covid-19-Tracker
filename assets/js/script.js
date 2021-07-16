@@ -111,8 +111,8 @@ var renderLocalStorage = function(){
 	for (var i=0; i<unique.length; i++ ) {
 		$("#search-list").
 		append(`
-		<li data-index=${i} class="saved-country button previous-button is-small is-warning is-light is-focused is-rounded">${SearchedCountries[i]}
-		<button class="previous-country">❌</button>
+		<li data-index=${i} class="saved-search button previous-button is-small is-warning is-light is-focused is-rounded">${unique[i]}
+		<button class="button-saved-country">❌</button>
 		</li>
 		`)
 	}
@@ -168,32 +168,22 @@ function getCountries() {
 			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);
 			arrayCountries.push(body[i].name)
 			// `<option id=${body[i].name} value=${body[i].name}>`		
-		};
-		
-		renderLocalStorage()
-
-		
+		};			
 	})
-
 	.catch((error) => {
-		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()
-				
-	});
-		
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country").show()				
+	});		
 };
-
-
 
 function refreshPage(){
     window.getElementById(".refresh").reload();
 }   
 
-
 //remove the saved search
 searchList.addEventListener("click", function(event) {
 	var element = event.target;
 	// Checks if element is a button
-	if (element.classList.contains("saved-country")){
+	if (element.classList.contains("button-saved-country")){
 	
 	  // Get its data-index value and remove the search element from the list
 	  var index = element.parentElement.getAttribute("data-index");
@@ -224,39 +214,44 @@ $("#submit").click(function(event){
 	} else {
 		AddCountryToStorage(country)
 		dataByCountryDate(country, date)		
-	}
-		
-		// if ($.inArray(country + " " + date, SearchedCountries)==-1){
-		// 	SearchedCountries.push(country + " " + date);
-		
-		// if ($.inArray(country, SearchedCountries)==-1){
-		// 	SearchedCountries.push(country);
-		// 	localStorage.setItem("SearchedCountries", JSON.stringify(SearchedCountries));
-		// }		
-
-	});
+	}		
+});
 
 var searchLink = function(){
-	$("li.saved-country").on("click",function(event) {  
+	$("li.saved-search").on("click",function(event) {  
 		var element = event.target; 
-		if (!element.classList.contains("saved-country")){
+		if (element.classList.contains("saved-search")){
 		// console.log(element.textContent)
 		var country= element.childNodes[0].nodeValue.trim()
 		console.log(country) 
 		console.log('testing');
-		var url = AddCountryToStorage(country)
-		dataByCountry(url)
+		// var url = AddCountryToStorage(country)
+		// renderLocalStorage();
+		if (covidDataChart){
+			covidDataChart.destroy();	
+		}	
+		// if (!date)  {
+		// 	AddCountryToStorage(country)
+		// 	dataByCountry(country);
+			
+		// } else {
+		// 	AddCountryToStorage(country)
+		// 	dataByCountryDate(country, date)		
+		// }	
+		dataByCountry(country)
+
 		}else{
 		return
-		}
-	
+		}	
 	});
 	}
 
-
 	function init(){
 		getCountries();	
-		searchListRender()		
+		searchListRender();
+		searchLink();
+				
 	}
 
 	init()
+	
