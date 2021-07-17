@@ -8,11 +8,13 @@ const options = {
 	},
   };
 
-const searchList = document.querySelector("#search-list");
+const searchList = document.querySelector('#search-list');
 var countryName = document.getElementById('results-text');
 var input = document.getElementById('search-input');
-var invalidCountryMsg = document.querySelector(".refresh");
-var downloadButton = $('.hide')
+var invalidCountryMsg = document.querySelector('.refresh');
+var downloadButton = $('#download') 
+downloadButton.addClass('hide')
+var totals = $('#totals')
 // console.log(invalidCountryMsg)
 // console.log(invalidCountryMsg.html)
 
@@ -21,25 +23,26 @@ var msg = $(".msg")
 const labels = ['Confirmed', 'Recovered', 'Deaths' ];
 
 var covidDataChart = "";
-var arrayCountries = [];
 var SearchedCountries = [];
 var errorWrongCountry = false
 
 var m = moment()
 var  mFormat = moment()
 
-// var CurrentDate = moment();
-
-// console.log(CurrentDate)
-// console.log(CurrentDate.format('Do MMMM YYYY'))
-
 //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
 function remove(arrOriginal, elementToRemove){
     return arrOriginal.filter(function(el){return el !== elementToRemove});
 }
 
-function removeCountryAndRender(){
-	var removeThis = $("input[name=browser]").val()
+function removeCountryAndRender(){	
+	var date = $("#date-input-start").val();
+	var country = $("input[name=browser]").val();
+	var removeThis = ""
+	if (!date){
+		removeThis = country
+	} else if (date){
+		removeThis = `${country}_${date}`
+	}		
 	// console.log(removeThis)
 	SearchedCountries = JSON.parse(localStorage.getItem("SearchedCountries"));
 	var cleanArray = remove(SearchedCountries, toTitleCas(removeThis));			
@@ -71,7 +74,8 @@ var dataByCountry = function (country){
 	})
 	.then((body) => {
 	renderChart(body[0].confirmed, body[0].recovered, body[0].deaths );	
-	// downloadButton.style.display = "inline-block";
+	
+	
 	})
 	.catch(() => {	
 		removeCountryAndRender();
@@ -82,12 +86,11 @@ var dataByCountry = function (country){
 
 //Fetch Data By Country and Date
 function dataByCountryDate (country, date){
-	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;
-	// countryName.textContent = toTitleCas(country);
+	const endpointUrl = `https://covid-19-data.p.rapidapi.com/report/country/name?name=${country}&date=${date}`;	
 	m = moment(date, 'YYYY-MM-DD')
 	mFormat = m.format('Do MMMM YYYY');	
-	console.log(country) 
-	console.log(mFormat) 
+	// console.log(country) 
+	// console.log(mFormat) 
 	countryName.textContent = country + " - " + mFormat
 	
 	//Fetch country data and display it
@@ -99,11 +102,14 @@ function dataByCountryDate (country, date){
 		if (body[0].provinces[0].confirmed) {
 			renderChart(body[0].provinces[0].confirmed, body[0].provinces[0].recovered, body[0].provinces[0].deaths );
 		} else {
+			removeCountryAndRender();
 			$(".msg" && ".refresh").html ("There is no data for this date .Please click to refresh").show()
 		}
 	})
-	.catch((err) => {
-	console.log(err);
+	.catch(() => {
+		removeCountryAndRender();
+		$(".msg" && ".refresh").html ("Please click to refresh and search for a valid country & date").show();	
+		countryName.textContent ="";
   });
 }
 
@@ -160,25 +166,25 @@ function renderChart (confirmed, recovered, deaths){
 			
 		}
 	};
-	var myChart = document.getElementById('myChart').getContext('2d');
-	
+	var myChart = document.getElementById('myChart').getContext('2d');	
 	covidDataChart = new Chart(myChart, barChartData);	
 	
 
 	if( chartType == "pie" || chartType =="doughnut" || chartType =="polarArea" ){
-		covidDataChart.canvas.parentNode.style.height = '600px';
-		covidDataChart.canvas.parentNode.style.width = '600px';
+		covidDataChart.canvas.parentNode.style.height = '550px';
+		covidDataChart.canvas.parentNode.style.width = '550px';
 	}
 
 	if( chartType == "bar" ){
-		covidDataChart.canvas.parentNode.style.height = '800px';
-		covidDataChart.canvas.parentNode.style.width = '800px';
+		covidDataChart.canvas.parentNode.style.height = '700px';
+		covidDataChart.canvas.parentNode.style.width = '700px';
 	}
 }  
 
 //https://dev.to/noemelo/how-to-save-chart-as-image-chart-js-2l0i
 //https://github.com/NoeMelo/Chart.js
 function downloadChart(){
+	downloadButton.removeClass('hide')
 	document.getElementById("download").addEventListener('click', function(){
 	var url_base64jp = document.getElementById("myChart").toDataURL("image/jpg");
 	var a =  document.getElementById("download");
@@ -196,7 +202,7 @@ var renderLocalStorage = function(){
 	for (var i=0; i<unique.length; i++ ) {
 		$("#search-list").
 		append(`
-		<li data-index=${i} class="saved-search is-justify-content-space-between button previous-button is-small is-warning is-light is-focused is-rounded">${unique[i]}
+		<li data-index=${i} class="saved-search is-justify-content-space-between button previous-button is-small is-warning is-light is-focused is-rounded tag  is-medium">${unique[i]}
 		<button class="button is-small is-rounded is-danger is-light is-focused button-saved-country">❌</button>
 		</li>
 		`)
@@ -255,17 +261,13 @@ function getCountries() {
 	})
 	.then((body) => {	
 		for (var i = 0 ; i < body.length ; i++ ) {
-			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);
-			arrayCountries.push(body[i].name)
-			// `<option id=${body[i].name} value=${body[i].name}>`		
+			$("#browsers").append(`<option class="option-country" value="${body[i].name}">`);				
 		};			
 	})
 	.catch((error) => {
 		$(".msg" && ".refresh").html ("Get Countries failed").show()				
 	});		
 };
-
-const totalArray = [];
 
 function totalData (){
 	const endpointUrl = `https://covid-19-data.p.rapidapi.com/totals`;
@@ -275,9 +277,13 @@ function totalData (){
 		return response.json();
 	})
 	.then((body) => {
-       
-        console.log(body);
-        console.log(body[0].confirmed)
+		const {confirmed , recovered , deaths } = body[0]
+		var totalsFectched = `Global Confirmed = ${confirmed.toLocaleString()} ; Global Recovered = ${recovered.toLocaleString()} ; Global Deaths = ${deaths.toLocaleString()}`;
+		totals.html( totalsFectched);
+		// console.log(totals)
+        // console.log(body);
+        // console.log(deaths);
+
 	})
 	.catch((err) => {
 	console.log(err);
@@ -313,7 +319,7 @@ $("#submit").click(function(event){
 		return;
 	  }  
 	var date = $("#date-input-start").val();				
-	console.log(date);
+	// console.log(date);
 	if (covidDataChart){
 		covidDataChart.destroy();	
 	}	
@@ -367,7 +373,7 @@ var searchLink = function(){
 function init(){
 		getCountries();	
 		searchListRender();		
-				
+		totalData();	
 	}
 
 init()

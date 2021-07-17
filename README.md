@@ -40,9 +40,13 @@ THEN I am again presented with results of the specified country and timeframe.
 
 ## Mock up
 
-You can view the deployed App at this link. [Covid-19-Tracker](https://mm-salvodragotta.github.io/Covid-19-Tracker/).
+The following animation shows the web application's appearance and functionality:
 
-## Technologies Used
+![Covid-19 Tracker gif](./assets/images/Covid19Tracker.gif)
+
+You can view the deployed App at this link. [Covid-19 Tracker](https://mm-salvodragotta.github.io/Covid-19-Tracker/).
+
+## Key Technologies Used
 
 **Chart.js**
 
