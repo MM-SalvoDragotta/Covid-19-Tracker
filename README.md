@@ -7,14 +7,16 @@ Covid-19-Tracker
 ## User Story 
 
 
+```md
 As A businessman 
 I WANT to see the number of Covid-19 Infections, Deaths and Recoveries
 SO THAT I can see which countries are safe to travel for business.
+```
 
 
 ## Acceptance Criteria 
 
-
+```md
 GIVEN I need to see Covid-19 data for every country.
 WHEN I enter the page 
 THEN I am presented with a well polished and easy to navigate page.
@@ -28,6 +30,7 @@ WHEN I click the submit button
 THEN I am presented with the results of the specified country and timeframe.
 WHEN I have searched for specific countries 
 THEN all previously searched countries are displayed on the page
+```
 
 ## Mock up
 
