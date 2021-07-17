@@ -45,9 +45,13 @@ h2 {
 }
 
 /* Styling the previous country buttons */
+#search-list {
+    display: flex;
+    flex-direction: column;
+}
+
 li {
     margin: 0.15rem;
-    display: table;
 }
 
 /* Error message */
