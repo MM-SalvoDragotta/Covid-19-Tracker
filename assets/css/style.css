@@ -52,6 +52,8 @@ h2 {
 
 li {
     margin: 0.15rem;
+    font-weight: bolder;
+    font-size: 38px;
 }
 
 /* Error message */
