@@ -13,6 +13,11 @@ h2 {
     font-size: 28px;
 }
 
+p {
+    font-weight: bold;
+    font-size: 20px;
+}
+
 /* This styles the search card on the left of the page */
 .custom-column {
     margin-top: 1.25rem;
@@ -45,9 +50,15 @@ h2 {
 }
 
 /* Styling the previous country buttons */
+#search-list {
+    display: flex;
+    flex-direction: column;
+}
+
 li {
     margin: 0.15rem;
-    display: table;
+    font-weight: bolder;
+    font-size: 38px;
 }
 
 /* Error message */
