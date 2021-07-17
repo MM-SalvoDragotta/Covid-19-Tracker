@@ -196,8 +196,8 @@ var renderLocalStorage = function(){
 	for (var i=0; i<unique.length; i++ ) {
 		$("#search-list").
 		append(`
-		<li data-index=${i} class="saved-search button previous-button is-small is-warning is-light is-focused is-rounded">${unique[i]}
-		<button class="button is-small is-rounded button-saved-country">❌</button>
+		<li data-index=${i} class="saved-search is-justify-content-space-between button previous-button is-small is-warning is-light is-focused is-rounded">${unique[i]}
+		<button class="button is-small is-rounded is-danger is-light is-focused button-saved-country">❌</button>
 		</li>
 		`)
 	}
