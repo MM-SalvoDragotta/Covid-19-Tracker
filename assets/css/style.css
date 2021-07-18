@@ -17,6 +17,16 @@ p {
     font-weight: bold;
     font-size: 20px;
 }
+/* https://stackoverflow.com/questions/43727032/hero-footer-not-at-bottom-of-page */
+html,
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body > footer {
+    margin-top: auto;
+}
 
 /* This styles the search card on the left of the page */
 .custom-column {
@@ -72,6 +82,6 @@ li {
     padding: 10px;
 }
 
-/* .hide{
+.hide{
     display: none;
-} */
+}

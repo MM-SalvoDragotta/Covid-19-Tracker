@@ -3,7 +3,8 @@
 
 ## Description
 ```md
-The COVID-19-Tracker allows users to select a country and view COVID-19 data including confirmed cases, deaths and recoveries. 
+The COVID-19-Tracker allows users to select a country 
+and view COVID-19 data including confirmed cases, deaths and recoveries. 
 Data is fetched from the Covid-19 Rapid API and rendered via js.charts. 
 Users can also select a previous date and view the COVID-19 totals up to that date. 
 User searches are stored in local storage and appended below the search bar.
@@ -33,13 +34,19 @@ WHEN I click the submit button
 THEN I am presented with the results of the specified country and timeframe.
 WHEN I have searched for specific countries 
 THEN all previously searched countries are displayed on the page
+WHEN I click on a country in the search history
+THEN I am again presented with results of the specified country and timeframe.
 ```
 
 ## Mock up
 
-You can view the deployed App at this link. [Covid-19-Tracker](https://mm-salvodragotta.github.io/Covid-19-Tracker/).
+The following animation shows the web application's appearance and functionality:
 
-## Technologies Used
+![Covid-19 Tracker gif](./assets/images/Covid19Tracker.gif)
+
+You can view the deployed App at this link. [Covid-19 Tracker](https://mm-salvodragotta.github.io/Covid-19-Tracker/).
+
+## Key Technologies Used
 
 **Chart.js**
 
