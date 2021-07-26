@@ -63,3 +63,13 @@ link to Covid-19 Rapid API: https://rapidapi.com/Gramzivi/api/covid-19-data/
 Bulma is a CSS Framework that allows you to style your webpage through pre-assigned classes. It is similar to Bootstrap in its functionality.
 link to Bulma: https://bulma.io/
 
+## Authors 
+
+**Salvo Dragotta** [Git Hub Profile](https://github.com/MM-SalvoDragotta) 
+
+**Arne Tripolone** [Git Hub Profile](https://github.com/ArneTripolone) 
+
+**Ronin Hietanen** [Git Hub Profile](https://github.com/RoninHietanen) 
+
+**Londiwe Dube** [Git Hub Profile](https://github.com/LondiweDube) 
+
